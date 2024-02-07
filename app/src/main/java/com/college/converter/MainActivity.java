@@ -23,33 +23,27 @@ import android.widget.TextView;
 */
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding binding; // Declare a variable for binding
+
     static private final Float CONVERSION_RATE = 0.80F;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater()); // Inflate the binding
+        setContentView(binding.getRoot()); // Set the root view of the binding
 
-        Button buttonConvert = findViewById(R.id.convertButton);
-
-        buttonConvert.setOnClickListener( view ->  {
-            convertCurrency(view);
-        } );
+        binding.convertButton.setOnClickListener(view -> convertCurrency(view)); // Use binding to access views
     }
 
     public void convertCurrency(View view) {
-
-        EditText inputView = findViewById(R.id.entryId);
-
-        String inputAmount = inputView.getText().toString();
-
-        TextView resultView = findViewById(R.id.resultId);
+        String inputAmount = binding.entryId.getText().toString();
+        TextView resultView = binding.resultId;
 
         if (!inputAmount.isEmpty()) {
             Float inputAmountDecimal = Float.valueOf(inputAmount);
-
             Float resultFloat = inputAmountDecimal * CONVERSION_RATE;
-
-            resultView.setText( resultFloat + " Euros" );
+            resultView.setText(resultFloat + " Euros");
         }
     }
 }
